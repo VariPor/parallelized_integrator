@@ -14,6 +14,9 @@ void Communicator::greet()
     std::cout << "  threads_num: количество используемых нитей для расчёта" << std::endl;
 }
 
+/** Функция для чтения значения double из std::cin.
+ *  При неверном диапазоне или формате печатается соответствующее сообщение и предлагается повторный ввод.
+ */
 double read_double()
 {
     std::string input_string;
@@ -45,6 +48,9 @@ double read_double()
     return a;
 }
 
+/**  Функция для чтения значения int из std::cin в диапазоне [min; max].
+ *  При неверном диапазоне или формате печатается соответствующее сообщение и предлагается повторный ввод.
+ */
 int read_int(int min, int max)
 {
     std::string input_string;
@@ -78,6 +84,11 @@ int read_int(int min, int max)
     return a;
 }
 
+/** Функция для чтения строки функции из std::cin.
+ * Проводится парсинг строки и пробный вызов функции со значением a, в случае неудачи предлагается повторный ввод.
+ * Реализация требует ввода функции одной переменной.
+ * В качестве буквы для обозначения переменной требуется использовать x.
+ */
 std::string read_function(double a)
 {
 
@@ -99,6 +110,10 @@ std::string read_function(double a)
         }
 }
 
+/** Выводит подсказки для пользователя и собирает входные данные для решаемой задачи.
+ * Проверяет корректность введённых данных
+ * Выводит информацию о собранных данных
+ */
 InputData Communicator::get_input_data()
 {
     double a, b;
@@ -110,7 +125,7 @@ InputData Communicator::get_input_data()
     std::cout << "Введите функцию для интегрирования (используйте только переменную x): " << std::endl;
     std::string func_str = read_function((a + b) / 2.0);
     std::cout << "Введите количество нитей исполнения: " << std::endl;
-    int n = read_int(1, 6);
+    int n = read_int(1, 20);
     std::cout << "Введите количество шагов интегрирования: " << std::endl;
     int steps = read_int(1, INT_MAX);
     std::cout << "Данные для расчёта:" << std::endl;
@@ -121,7 +136,10 @@ InputData Communicator::get_input_data()
     return InputData{a, b, func_str, TaskType::INTEGRATE, n, steps};
 }
 
-void Communicator::print_output(OutputData output_data) {
+/** Выводит информацию о результате расчёта и затраченом на расчёты времени
+ */
+void Communicator::print_output(OutputData output_data)
+{
     std::cout << "Интеграл равен " << output_data.calculated_result << std::endl;
     std::cout << "Затрачено " << output_data.duration.count() << " микросекунд" << std::endl;
 }
